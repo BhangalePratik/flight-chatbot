@@ -1,11 +1,9 @@
 // npm packages 
-const chalk = require('chalk');
 const express = require('express');
 const app = express();
 const df = require('dialogflow-fulfillment');
 
 // importing from another files
-// require('./db/mongodb');
 const Event = require('./models/event');
 
 // defining functions
@@ -15,41 +13,8 @@ function setAppropriateTime(date) {
     return date;
 }
 
-// defining constants
-let eventExist = false;
-let events = [];
-
-let event = new Event({
-    eventName: 'Indra Bday Pre Preparation',
-    startingDateTime: setAppropriateTime(new Date('31 December 2020 10:20')),
-    endingDateTime: setAppropriateTime(new Date('31 December 2020 10:50')),
-});
-
 // app changing format
 app.use(express.json());
-
-// const savingData = function () {
-//     event.save().then(() => {
-//         console.log(chalk.green(event));
-//     }).catch((error) => {
-//         console.log(error);
-//     });
-// }
-
-// Event.find({}).then((events) => {
-//     events.some((data) => {   
-//         if ((event.startingDateTime <= data.endingDateTime  && event.endingDateTime >= data.endingDateTime) || (event.startingDateTime < data.startingDateTime  && event.endingDateTime > data.startingDateTime)|| (event.startingDateTime < data.startingDateTime  && event.endingDateTime > data.endingDateTime)|| (event.startingDateTime > data.startingDateTime  && event.endingDateTime < data.endingDateTime)) {
-//             eventExist = true;
-//             return true;
-//         }
-//     })
-//     if(eventExist === true){
-//         console.log("Event is overlapping with other events");
-//     } else{
-//         savingData();
-//         console.log("Event is successfully added to your Event Manager");
-//     }
-// })
 
 app.post('/', (req, res) => {
 
