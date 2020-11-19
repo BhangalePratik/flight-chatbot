@@ -1,0 +1,15 @@
+1.backend  done
+2.mongoose setup
+2.data storage into mongodb
+3.frontend part
+5.frontend + backend integration
+6.heroku pe upload
+7.webhook use 
+8. intent,events define.
+
+Defining Intents: 
+1. Hi => welcome to XYZ airlines. Press 1 to book flight and 2 to know your booking. 
+2. 1 => Please Enter your EmailId and Password. 
+   2 => Please Enter your EmailId and Password.
+3. IF valid email and passord is enter => Please Enter your booking details in following format : source,destination,flightDate.
+3. Chennai,Mumbai,flightDate => Your booking is done. Thank you for choosing XYZ airlines.
