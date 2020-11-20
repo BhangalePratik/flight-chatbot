@@ -1,17 +1,7 @@
-// npm packages 
+// npm packages frh
 const express = require('express');
 const app = express();
 const df = require('dialogflow-fulfillment');
-
-// importing from another files
-const Event = require('./models/event');
-
-// defining functions
-function setAppropriateTime(date) {
-    date.setHours(date.getHours() + 5);
-    date.setMinutes(date.getMinutes() + 30);
-    return date;
-}
 
 // app changing format
 app.use(express.json());
@@ -45,8 +35,8 @@ app.post('/', (req, res) => {
             return user.email === email && user.password === password;
         })
         if (isValid) {
-            agent.context.set('toKnowBook', 1);
-            agent.add("Validation Successful. Press 1 to book flight and 2 to know information.");
+            agent.context.set('genderAgeVerify', 1);
+            agent.add("Validation Successful. Please enter your age or gender");
         } else {
             agent.context.set('infoQuestion', 1);
             agent.add("Validation failed. Please enter your correct email id and password in format email,password");
@@ -94,12 +84,30 @@ app.post('/', (req, res) => {
         }
     }
 
+    function seventhEvent(){
+        const parameters = req.body.queryResult.parameters;
+        if ('age' in parameters){
+            const age = req.body.queryResult.parameters.age.amount;
+            agent.context.set('toKnowBook', 1);
+            agent.add("Thanks for successfully entering the age.Press 1 to book flight and 2 to know information.");
+        } else if ('gender' in parameters){
+            const gender = req.body.queryResult.parameters.gender;
+            agent.context.set('toKnowBook', 1);
+            agent.add("Thanks for successfully entering the gender.Press 1 to book flight and 2 to know information.");
+        } else {
+            agent.context.set('genderAgeVerify', 1);
+            agent.add("You are entering wrong information. Please write correct information.");
+        }
+        
+    }
+
 
     const intentMap = new Map();
     intentMap.set('ThirdIntent', thirdEvent);
     intentMap.set('FourthIntent', fourthEvent);
     intentMap.set('FifthIntent', fifthEvent);
     intentMap.set('SixthIntent', sixthEvent);
+    intentMap.set('seventhIntent',seventhEvent);
 
     agent.handleRequest(intentMap);
 
